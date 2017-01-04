@@ -21,7 +21,9 @@ public class MainActivity extends Activity {
         mPopButton.getPopmodel()
                 .setRotateOfMainButton(45)
                 .setDurationTime(500)
-                .setBackground(0x00ffffff);
+                .setBackground(0x00ffffff)
+                .setNumOfButton(3);
+        
     }
 
 }

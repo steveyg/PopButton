@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import com.steveyg.popbutton.R;
 import com.steveyg.popbutton.model.PopModel;
 
+import java.util.ArrayList;
+
 /**
  * Created by steveyg on 2017/1/3.
  */
@@ -24,7 +26,7 @@ public class PopActivity extends Activity {
     private ImageView mainButton;
     private RotateAnimation mainButtonRotateStart, mainButtonRotateEnd;
     private int DURATION_TIME = 0;
-
+    private ArrayList<ImageView> mButtons = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
