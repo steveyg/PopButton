@@ -63,38 +63,74 @@ public class PopActivity extends Activity {
 
         float startDegree = 0;
         float endDegree = 180;
+        int flag = 1;
+        switch (model.getMenuDirection()) {
+            case PopModel.UP:
+                startDegree = 0;
+                endDegree = 180;
+                flag = 1;
+                break;
+            case PopModel.DOWN:
+                startDegree = 180;
+                endDegree = 360;
+                flag = 1;
+                break;
+            case PopModel.LEFT:
+                startDegree = 90;
+                endDegree = 270;
+                flag = 1;
+                break;
+            case PopModel.RIGHT:
+                startDegree = 270;
+                endDegree = 450;
+                flag = 1;
+                break;
+            case PopModel.LEFT_UP:
+                startDegree = 100;
+                endDegree = 170;
+                flag = -1;
+                break;
+            case PopModel.LEFT_DOWN:
+                startDegree = 190;
+                endDegree = 260;
+                flag = -1;
+                break;
+            case PopModel.RIGHT_UP:
+                startDegree = 10;
+                endDegree = 80;
+                flag = -1;
+                break;
+            case PopModel.RIGHT_DOWN:
+                startDegree = 280;
+                endDegree = 350;
+                flag = -1;
+                break;
+        }
         float radius = model.getRadius();
         for (int i = 0; i < model.getNumOfButton(); i++) {
             AnimationSet start = new AnimationSet(true);
-            float degree = (endDegree - startDegree) / (model.getNumOfButton() + 1) * (i + 1) + startDegree;
+            float degree = (endDegree - startDegree) / (model.getNumOfButton() + flag) * (i + Math.max(0,flag)) + startDegree;
+            float radian = (float) ((Math.PI / 180) * degree);
             float endX = 0;
             float endY = 0;
-            if(degree < 90){
-                degree = 180 - degree;
-                endX = (float) (radius * Math.cos(degree));
-                endY = (float) (radius * Math.sin(degree));
+
+            endX = (float) (radius * Math.cos(radian));
+            endY = (float) (radius * Math.sin(radian));
+            degree = degree % 360;
+            if (degree < 90) {
                 endX = Math.abs(endX);
                 endY = -Math.abs(endY);
-            }else if(degree < 180){
-                endX = (float) (radius * Math.cos(degree));
-                endY = (float) (radius * Math.sin(degree));
+            } else if (degree < 180) {
                 endX = -Math.abs(endX);
                 endY = -Math.abs(endY);
-            }else if(degree < 270){
-                endX = (float) (radius * Math.sin(degree));
-                endY = (float) (radius * Math.cos(degree));
+            } else if (degree < 270) {
                 endX = -Math.abs(endX);
                 endY = Math.abs(endY);
-            }else if(degree < 360){
-                endX = (float) (radius * Math.cos(degree));
-                endY = (float) (radius * Math.sin(degree));
+            } else if (degree < 360) {
                 endX = Math.abs(endX);
                 endY = Math.abs(endY);
             }
-            System.out.println(degree + "  " +  Math.sin(degree) + "   " + Math.cos(degree));
-            System.out.println(degree + "  " + startX + "   " + startY + "  "+ endX + "   "+ endY);
-//            TranslateAnimation tranStart = new TranslateAnimation(Animation.ABSOLUTE, startX, Animation.ABSOLUTE, endX, Animation.ABSOLUTE, startY, Animation.ABSOLUTE, endY);
-            TranslateAnimation tranStart = new TranslateAnimation(0,endX,0,endY);
+            TranslateAnimation tranStart = new TranslateAnimation(0, endX, 0, endY);
             start.setFillAfter(true);
             start.setDuration(DURATION_TIME);
             start.addAnimation(tranStart);

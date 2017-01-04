@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.steveyg.popbutton.R;
+import com.steveyg.popbutton.model.PopModel;
 import com.steveyg.popbutton.view.PopButton;
 
 public class MainActivity extends Activity {
@@ -22,8 +23,9 @@ public class MainActivity extends Activity {
                 .setRotateOfMainButton(45)
                 .setDurationTime(350)
                 .setBackground(0x55000000)
-                .setNumOfButton(2)
-                .setRadius(100);
+                .setNumOfButton(3)
+                .setRadius(200)
+                .setMenuDirection(PopModel.UP);
 
         int[] res = {R.drawable.icon1,R.drawable.icon2,R.drawable.icon3};
         mPopButton.getPopmodel().setButtonImageResource(res);
