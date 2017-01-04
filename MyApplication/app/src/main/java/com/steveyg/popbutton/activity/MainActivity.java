@@ -2,6 +2,7 @@ package com.steveyg.popbutton.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 
 import com.steveyg.popbutton.R;
@@ -17,6 +18,10 @@ public class MainActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         mPopButton = (PopButton) findViewById(R.id.popbutton);
-        mPopButton.getPopmodel().setRotateOfMainButton(45).setDurationTime(1000);
+        mPopButton.getPopmodel()
+                .setRotateOfMainButton(45)
+                .setDurationTime(500)
+                .setBackground(0x00ffffff);
     }
+
 }

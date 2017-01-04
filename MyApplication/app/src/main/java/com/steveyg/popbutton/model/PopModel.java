@@ -28,6 +28,9 @@ public class PopModel implements Serializable {
      */
     private int rotateOfMainButton = 0;
 
+    private int background = 0xffffffff;
+
+
     private PopModel(ImageView mainButton){
         this.mainButton = mainButton;
     }
@@ -73,6 +76,15 @@ public class PopModel implements Serializable {
 
     public PopModel setRotateOfMainButton(int rotateOfMainButton) {
         this.rotateOfMainButton = rotateOfMainButton;
+        return this;
+    }
+
+    public int getBackground() {
+        return background;
+    }
+
+    public PopModel setBackground(int background) {
+        this.background = background;
         return this;
     }
 }

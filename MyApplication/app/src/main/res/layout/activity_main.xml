@@ -14,7 +14,7 @@
        android:id="@+id/popbutton"
        android:layout_centerHorizontal="true"
        android:layout_alignParentBottom="true"
-       android:background="@mipmap/ic_launcher"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content" />
+       android:background="@drawable/chooser_button"
+       android:layout_width="50dp"
+       android:layout_height="50dp" />
 </RelativeLayout>
