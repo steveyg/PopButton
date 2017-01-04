@@ -54,6 +54,11 @@ public class PopModel implements Serializable {
     private int[] buttonBackground;
     private ArrayList<View.OnClickListener> buttonClickListener = new ArrayList<>();
 
+    /**
+     * the distance of button move
+     */
+    private float radius = 0;
+
     private PopModel(ImageView mainButton){
         this.mainButton = mainButton;
     }
@@ -151,5 +156,14 @@ public class PopModel implements Serializable {
 
     public void setButtonClickListener(ArrayList<View.OnClickListener> buttonClickListener) {
         this.buttonClickListener = buttonClickListener;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public PopModel setRadius(float radius) {
+        this.radius = radius;
+        return this;
     }
 }
