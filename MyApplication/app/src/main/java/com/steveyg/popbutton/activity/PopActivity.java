@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -51,6 +52,7 @@ public class PopActivity extends Activity {
     }
 
     private void initAnim() {
+        //init main button anim
         float startX = model.getMainButton().getX() + model.getMainButton().getWidth() / 2;
         float startY = model.getMainButton().getY() + model.getMainButton().getHeight() / 2;
         mainButtonRotateStart = new RotateAnimation(0, 0 + model.getRotateOfMainButton(), Animation.ABSOLUTE, startX, Animation.ABSOLUTE, startY);
@@ -61,6 +63,7 @@ public class PopActivity extends Activity {
         mainButtonRotateEnd.setFillAfter(true);
         mainButtonRotateEnd.setDuration(DURATION_TIME);
 
+        //init tran anim
         float startDegree = 0;
         float endDegree = 180;
         int flag = 1;
@@ -106,9 +109,11 @@ public class PopActivity extends Activity {
                 flag = -1;
                 break;
         }
+
         float radius = model.getRadius();
         for (int i = 0; i < model.getNumOfButton(); i++) {
-            AnimationSet start = new AnimationSet(true);
+            //start anim
+            AnimationSet start = new AnimationSet(false);
             float degree = (endDegree - startDegree) / (model.getNumOfButton() + flag) * (i + Math.max(0,flag)) + startDegree;
             float radian = (float) ((Math.PI / 180) * degree);
             float endX = 0;
@@ -133,8 +138,17 @@ public class PopActivity extends Activity {
             TranslateAnimation tranStart = new TranslateAnimation(0, endX, 0, endY);
             start.setFillAfter(true);
             start.setDuration(DURATION_TIME);
+            tranStart.setInterpolator(new OvershootInterpolator());
             start.addAnimation(tranStart);
             animSetStrat.add(start);
+
+            //end anim
+            AnimationSet end = new AnimationSet(false);
+            TranslateAnimation tranEnd = new TranslateAnimation(endX,0, endY,0);
+            end.setFillAfter(true);
+            end.setDuration(DURATION_TIME);
+            end.addAnimation(tranEnd);
+            animSetEnd.add(end);
         }
     }
 
@@ -202,6 +216,14 @@ public class PopActivity extends Activity {
             }
         });
         mainButton.startAnimation(mainButtonRotateEnd);
+        for (int i = 0; i < model.getNumOfButton(); i++) {
+            mButtons.get(i).startAnimation(animSetEnd.get(i));
+        }
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,0);
+    }
 }
