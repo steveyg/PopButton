@@ -21,7 +21,8 @@ public class MainActivity extends Activity {
         mPopButton = (PopButton) findViewById(R.id.popbutton);
         mPopButton.getPopmodel()
                 .setRotateOfMainButton(45)
-                .setDurationTime(350)
+                .setRotateOfMenuButton(360)
+                .setDurationTime(500)
                 .setBackground(0x55000000)
                 .setNumOfButton(3)
                 .setRadius(200)

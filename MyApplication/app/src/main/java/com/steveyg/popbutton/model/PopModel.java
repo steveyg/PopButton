@@ -47,6 +47,8 @@ public class PopModel implements Serializable {
      */
     private int rotateOfMainButton = 0;
 
+    private int rotateOfMenuButton = 0;
+
     private int background = 0xffffffff;
 
     private int numOfButton = 0;
@@ -164,6 +166,15 @@ public class PopModel implements Serializable {
 
     public PopModel setRadius(float radius) {
         this.radius = radius;
+        return this;
+    }
+
+    public int getRotateOfMenuButton() {
+        return rotateOfMenuButton;
+    }
+
+    public PopModel setRotateOfMenuButton(int rotateOfMenuButton) {
+        this.rotateOfMenuButton = rotateOfMenuButton;
         return this;
     }
 }

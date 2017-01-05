@@ -1,5 +1,7 @@
 package com.steveyg.popbutton.activity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +34,7 @@ public class PopActivity extends Activity {
     private ArrayList<ImageView> mButtons = new ArrayList<>();
     private ArrayList<AnimationSet> animSetStrat = new ArrayList<>();
     private ArrayList<AnimationSet> animSetEnd = new ArrayList<>();
-
+    private RotateAnimation menuRotateStart,menuRotateEnd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +151,12 @@ public class PopActivity extends Activity {
             end.setDuration(DURATION_TIME);
             end.addAnimation(tranEnd);
             animSetEnd.add(end);
+
+//            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0);
+            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+//            start.addAnimation(menuRotateStart);
+            menuRotateEnd = new RotateAnimation(0,model.getRotateOfMenuButton(),Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+//            end.addAnimation(menuRotateEnd);
         }
     }
 
@@ -176,6 +184,13 @@ public class PopActivity extends Activity {
             }
             button.setX(model.getMainButton().getX());
             button.setY(model.getMainButton().getY() + model.getMainButtonOffsetY());
+            button.setPivotX(model.getMainButton().getPivotX());
+            button.setPivotY(model.getMainButton().getPivotY());
+            button.setRotation(model.getMainButton().getRotation());
+            button.setRotationX(model.getMainButton().getRotationX());
+            button.setRotationY(model.getMainButton().getRotationY());
+            button.setTop(model.getMainButton().getTop());
+            button.setBottom(model.getMainButton().getBottom());
             bg.addView(button);
             mButtons.add(button);
         }
@@ -195,6 +210,18 @@ public class PopActivity extends Activity {
 
         for (int i = 0; i < model.getNumOfButton(); i++) {
             mButtons.get(i).startAnimation(animSetStrat.get(i));
+//            AnimatorSet animatorSet = new AnimatorSet();
+//            ObjectAnimator anim = ObjectAnimator .ofFloat(mButtons.get(i), "rotationX", 0f, 180f);
+//            anim.setDuration(DURATION_TIME);
+//            ObjectAnimator anim2 = ObjectAnimator .ofFloat(mButtons.get(i), "rotationX", 180f, 0f);
+//            anim2.setDuration(DURATION_TIME);
+//            ObjectAnimator anim3 = ObjectAnimator .ofFloat(mButtons.get(i), "rotationY", 0f, 180f);
+//            anim3.setDuration(DURATION_TIME);
+//            ObjectAnimator anim4 = ObjectAnimator .ofFloat(mButtons.get(i), "rotationY", 180f, 0f);
+//            anim4.setDuration(DURATION_TIME);
+//            animatorSet.setDuration(DURATION_TIME);
+//            animatorSet.play(anim).with(anim3);//两个动画同时开始
+//            animatorSet.start();
         }
     }
 
