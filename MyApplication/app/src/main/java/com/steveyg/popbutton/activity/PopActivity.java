@@ -11,10 +11,12 @@ import android.view.animation.AnimationSet;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.steveyg.popbutton.MyRotateAnimation;
 import com.steveyg.popbutton.R;
 import com.steveyg.popbutton.model.PopModel;
 
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 
 public class PopActivity extends Activity {
 
-    private RelativeLayout bg;
+    private AbsoluteLayout bg;
     private PopModel model;
     private ImageView mainButton;
     private RotateAnimation mainButtonRotateStart, mainButtonRotateEnd;
@@ -42,9 +44,9 @@ public class PopActivity extends Activity {
         setContentView(R.layout.activity_pop);
 
         initData();
-        initAnim();
         initView();
         drawView();
+        initAnim();
         startAnim();
     }
 
@@ -142,26 +144,33 @@ public class PopActivity extends Activity {
             start.setDuration(DURATION_TIME);
             tranStart.setInterpolator(new OvershootInterpolator());
             start.addAnimation(tranStart);
+
+            //            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0);
+            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0,Animation.ABSOLUTE,model.getMainButton().getPivotX(),Animation.ABSOLUTE,model.getMainButton().getPivotY());
+            start.addAnimation(menuRotateStart);
+            start.setDuration(200);
+            start.setFillAfter(true);
+            start.setStartOffset(DURATION_TIME);
             animSetStrat.add(start);
 
             //end anim
             AnimationSet end = new AnimationSet(false);
+
             TranslateAnimation tranEnd = new TranslateAnimation(endX,0, endY,0);
             end.setFillAfter(true);
             end.setDuration(DURATION_TIME);
             end.addAnimation(tranEnd);
             animSetEnd.add(end);
 
-//            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0);
-            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-//            start.addAnimation(menuRotateStart);
+
+
             menuRotateEnd = new RotateAnimation(0,model.getRotateOfMenuButton(),Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
 //            end.addAnimation(menuRotateEnd);
         }
     }
 
     private void initView() {
-        bg = (RelativeLayout) findViewById(R.id.bg);
+        bg = (AbsoluteLayout) findViewById(R.id.bg);
         bg.setBackgroundColor(model.getBackground());
         bg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,32 +186,33 @@ public class PopActivity extends Activity {
     private void drawView() {
         for (int i = 0; i < model.getNumOfButton(); i++) {
             ImageView button = new ImageView(this);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight());
+//            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight());
+            AbsoluteLayout.LayoutParams params = new AbsoluteLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight(),(int)model.getMainButton().getX(),(int)model.getMainButton().getY());
             button.setLayoutParams(params);
             if (model.getButtonImageResource().length > i) {
                 button.setImageResource(model.getButtonImageResource()[i]);
             }
-            button.setX(model.getMainButton().getX());
-            button.setY(model.getMainButton().getY() + model.getMainButtonOffsetY());
-            button.setPivotX(model.getMainButton().getPivotX());
-            button.setPivotY(model.getMainButton().getPivotY());
-            button.setRotation(model.getMainButton().getRotation());
-            button.setRotationX(model.getMainButton().getRotationX());
-            button.setRotationY(model.getMainButton().getRotationY());
-            button.setTop(model.getMainButton().getTop());
-            button.setBottom(model.getMainButton().getBottom());
+//            button.setX(model.getMainButton().getX());
+//            button.setY(model.getMainButton().getY() + model.getMainButtonOffsetY());
+//            button.setPivotX(model.getMainButton().getPivotX());
+//            button.setPivotY(model.getMainButton().getPivotY());
+            int [] location = new int[2];
+            button.getLocationOnScreen(location);
+            System.out.println(location[0] + "  " + location[1]);
             bg.addView(button);
             mButtons.add(button);
         }
 
         mainButton = new ImageView(this);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight());
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight());
+        AbsoluteLayout.LayoutParams params = new AbsoluteLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight(),(int)model.getMainButton().getX(),(int)model.getMainButton().getY());
         mainButton.setLayoutParams(params);
         mainButton.setBackground(model.getMainButton().getBackground());
         mainButton.setX(model.getMainButton().getX());
         mainButton.setY(model.getMainButton().getY() + model.getMainButtonOffsetY());
 //        mainButton.setVisibility(View.GONE);
         bg.addView(mainButton);
+
     }
 
     private void startAnim() {
@@ -210,18 +220,6 @@ public class PopActivity extends Activity {
 
         for (int i = 0; i < model.getNumOfButton(); i++) {
             mButtons.get(i).startAnimation(animSetStrat.get(i));
-//            AnimatorSet animatorSet = new AnimatorSet();
-//            ObjectAnimator anim = ObjectAnimator .ofFloat(mButtons.get(i), "rotationX", 0f, 180f);
-//            anim.setDuration(DURATION_TIME);
-//            ObjectAnimator anim2 = ObjectAnimator .ofFloat(mButtons.get(i), "rotationX", 180f, 0f);
-//            anim2.setDuration(DURATION_TIME);
-//            ObjectAnimator anim3 = ObjectAnimator .ofFloat(mButtons.get(i), "rotationY", 0f, 180f);
-//            anim3.setDuration(DURATION_TIME);
-//            ObjectAnimator anim4 = ObjectAnimator .ofFloat(mButtons.get(i), "rotationY", 180f, 0f);
-//            anim4.setDuration(DURATION_TIME);
-//            animatorSet.setDuration(DURATION_TIME);
-//            animatorSet.play(anim).with(anim3);//两个动画同时开始
-//            animatorSet.start();
         }
     }
 
