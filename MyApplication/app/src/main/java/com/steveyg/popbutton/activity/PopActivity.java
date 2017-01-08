@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.steveyg.popbutton.MyRotateAnimation;
 import com.steveyg.popbutton.R;
 import com.steveyg.popbutton.model.PopModel;
 
@@ -146,11 +145,11 @@ public class PopActivity extends Activity {
             start.addAnimation(tranStart);
 
             //            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0);
-            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0,Animation.ABSOLUTE,model.getMainButton().getPivotX(),Animation.ABSOLUTE,model.getMainButton().getPivotY());
+            menuRotateStart = new RotateAnimation(model.getRotateOfMenuButton(),0,Animation.ABSOLUTE,500,Animation.ABSOLUTE,500);
             start.addAnimation(menuRotateStart);
-            start.setDuration(200);
-            start.setFillAfter(true);
-            start.setStartOffset(DURATION_TIME);
+            menuRotateStart.setDuration(200);
+            menuRotateStart.setFillAfter(true);
+            menuRotateStart.setStartOffset(DURATION_TIME);
             animSetStrat.add(start);
 
             //end anim
