@@ -31,9 +31,12 @@ public class PopModel implements Serializable {
     public final static int RIGHT_DOWN = 8;
 
     /**
-     * the time of Anim
+     * time of Anim
      */
     private int durationTime = 0;
+
+    private int rotateTime = 0;
+    private int rotateDelayTime = 0;
 
     /**
      * the offest of main button in Y axin
@@ -175,6 +178,24 @@ public class PopModel implements Serializable {
 
     public PopModel setRotateOfMenuButton(int rotateOfMenuButton) {
         this.rotateOfMenuButton = rotateOfMenuButton;
+        return this;
+    }
+
+    public int getRotateTime() {
+        return rotateTime;
+    }
+
+    public PopModel setRotateTime(int rotateTime) {
+        this.rotateTime = rotateTime;
+        return this;
+    }
+
+    public int getRotateDelayTime() {
+        return rotateDelayTime;
+    }
+
+    public PopModel setRotateDelayTime(int rotateDelayTime) {
+        this.rotateDelayTime = rotateDelayTime;
         return this;
     }
 }
