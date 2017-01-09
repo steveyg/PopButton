@@ -51,7 +51,7 @@ public class PopModel implements Serializable {
 
     private int rotateOfMenuButton = 0;
 
-    private int background = 0xffffffff;
+    private int background = 0x00ffffff;
 
     private int numOfButton = 0;
     private int[] buttonImageResource;
