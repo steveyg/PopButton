@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
             clickListenerList.add(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(),"click button" + fi ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PopActivity.instance,"click button" + fi ,Toast.LENGTH_SHORT).show();
                 }
             });
         }
