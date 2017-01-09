@@ -12,8 +12,7 @@
 
    <com.steveyg.popbutton.view.PopButton
        android:id="@+id/popbutton"
-       android:layout_centerHorizontal="true"
-       android:layout_alignParentBottom="true"
+       android:layout_centerInParent="true"
        android:background="@drawable/chooser_button"
        android:layout_width="50dp"
        android:layout_height="50dp" />

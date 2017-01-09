@@ -29,7 +29,6 @@ public class PopModel implements Serializable {
     public final static int LEFT_DOWN = 6;
     public final static int RIGHT_UP = 7;
     public final static int RIGHT_DOWN = 8;
-
     /**
      * time of Anim
      */

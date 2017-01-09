@@ -38,6 +38,7 @@ public class PopActivity extends Activity {
     private ArrayList<AnimationSet> animSetStrat = new ArrayList<>();
     private ArrayList<AnimationSet> animSetEnd = new ArrayList<>();
     private RotateAnimation menuRotateStart,menuRotateEnd;
+    private ArrayList<ImageView> displayButtons = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +61,8 @@ public class PopActivity extends Activity {
 
     private void initAnim() {
         //init main button anim
-        float startX = model.getMainButton().getX() + model.getMainButton().getWidth() / 2;
-        float startY = model.getMainButton().getY() + model.getMainButton().getHeight() / 2;
+        final float startX = model.getMainButton().getX() + model.getMainButton().getWidth() / 2;
+        final float startY = model.getMainButton().getY() + model.getMainButton().getHeight() / 2;
         mainButtonRotateStart = new RotateAnimation(0, model.getRotateOfMainButton(), Animation.ABSOLUTE, startX, Animation.ABSOLUTE, startY);
         mainButtonRotateStart.setFillAfter(true);
         mainButtonRotateStart.setDuration(DURATION_TIME);
@@ -148,6 +149,38 @@ public class PopActivity extends Activity {
             tranStart.setDuration(DURATION_TIME);
             tranStart.setInterpolator(new OvershootInterpolator());
             start.addAnimation(tranStart);
+            final int finali = i;
+            final float finalEndX = endX;
+            final float finalEndY = endY;
+            start.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                    ImageView button = new ImageView(PopActivity.this);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight());
+                    button.setLayoutParams(params);
+                    if (model.getButtonImageResource().length > finali) {
+                            button.setImageResource(model.getButtonImageResource()[finali]);
+                    }
+                    button.setX(startX + finalEndX - mButtons.get(finali).getWidth()/2);
+                    button.setY(startY +  finalEndY - mButtons.get(finali).getHeight()/2);
+                    if (model.getButtonClickListener().size() > finali) {
+                        button.setOnClickListener(model.getButtonClickListener().get(finali));
+                    }
+                    bg.addView(button);
+                    displayButtons.add(button);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
 
             menuRotateStart = new RotateAnimation(0,model.getRotateOfMenuButton(),Animation.ABSOLUTE, startX + endX, Animation.ABSOLUTE, startY + endY);
             start.addAnimation(menuRotateStart);
@@ -169,8 +202,25 @@ public class PopActivity extends Activity {
             menuRotateEnd.setDuration(MENU_ROTATE_TIME);
             end.addAnimation(menuRotateEnd);
 
+            end.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    for(int i = 0;i < displayButtons.size();i++){
+                        displayButtons.get(i).setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
             animSetEnd.add(end);
-//            end.addAnimation(menuRotateEnd);
         }
     }
 
@@ -181,7 +231,6 @@ public class PopActivity extends Activity {
             @Override
             public void onClick(View v) {
                 endAnim();
-//                finish();
             }
         });
 
@@ -192,7 +241,6 @@ public class PopActivity extends Activity {
         for (int i = 0; i < model.getNumOfButton(); i++) {
             ImageView button = new ImageView(this);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight());
-//            AbsoluteLayout.LayoutParams params = new AbsoluteLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight(),(int)model.getMainButton().getX(),(int)model.getMainButton().getY());
             button.setLayoutParams(params);
             if (model.getButtonImageResource().length > i) {
                 button.setImageResource(model.getButtonImageResource()[i]);
@@ -201,21 +249,16 @@ public class PopActivity extends Activity {
             button.setY(model.getMainButton().getY() + model.getMainButtonOffsetY());
             button.setPivotX(model.getMainButton().getPivotX());
             button.setPivotY(model.getMainButton().getPivotY());
-            int [] location = new int[2];
-            button.getLocationOnScreen(location);
-            System.out.println(location[0] + "  " + location[1]);
             bg.addView(button);
             mButtons.add(button);
         }
 
         mainButton = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight());
-//        AbsoluteLayout.LayoutParams params = new AbsoluteLayout.LayoutParams(model.getMainButton().getWidth(), model.getMainButton().getHeight(),(int)model.getMainButton().getX(),(int)model.getMainButton().getY());
         mainButton.setLayoutParams(params);
         mainButton.setBackground(model.getMainButton().getBackground());
         mainButton.setX(model.getMainButton().getX());
         mainButton.setY(model.getMainButton().getY() + model.getMainButtonOffsetY());
-        mainButton.setVisibility(View.GONE);
         bg.addView(mainButton);
 
     }

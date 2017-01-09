@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.steveyg.popbutton.R;
 import com.steveyg.popbutton.model.PopModel;
 import com.steveyg.popbutton.view.PopButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends Activity {
 
     private PopButton mPopButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +30,23 @@ public class MainActivity extends Activity {
                 .setRotateDelayTime(125)
                 .setBackground(0x55000000)
                 .setNumOfButton(3)
-                .setRadius(200)
+                .setRadius(250)
                 .setMenuDirection(PopModel.UP);
 
         int[] res = {R.drawable.icon1,R.drawable.icon2,R.drawable.icon3};
         mPopButton.getPopmodel().setButtonImageResource(res);
+
+        ArrayList<View.OnClickListener> clickListenerList = new ArrayList<>();
+        for(int i = 0; i < 3 ; i++){
+            final int fi = i + 1;
+            clickListenerList.add(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(),"click button" + fi ,Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        mPopButton.getPopmodel().setButtonClickListener(clickListenerList);
 
     }
 
