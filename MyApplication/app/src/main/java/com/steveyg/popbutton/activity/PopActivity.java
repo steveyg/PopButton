@@ -149,6 +149,11 @@ public class PopActivity extends Activity {
             start.setFillAfter(true);
             tranStart.setDuration(DURATION_TIME);
             tranStart.setInterpolator(new OvershootInterpolator());
+            if (model.getMenuButtonOffsetTime() > 0){
+                tranStart.setStartOffset(i * model.getMenuButtonOffsetTime());
+            }else{
+                tranStart.setStartOffset((model.getNumOfButton() - 1 - i) * Math.abs(model.getMenuButtonOffsetTime()));
+            }
             start.addAnimation(tranStart);
             final int finali = i;
             final float finalEndX = endX;

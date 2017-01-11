@@ -24,14 +24,14 @@ public class MainActivity extends Activity {
         mPopButton = (PopButton) findViewById(R.id.popbutton);
         mPopButton.getPopmodel()
                 .setRotateOfMainButton(45)
-                .setRotateOfMenuButton(360)
-                .setDurationTime(400)
-                .setRotateTime(170)
-                .setRotateDelayTime(125)
+                .setRotateOfMenuButton(0)
+                .setDurationTime(500)
                 .setBackground(0x55000000)
                 .setNumOfButton(3)
-                .setRadius(250)
-                .setMenuDirection(PopModel.UP);
+                .setRadius(400)
+                .setMenuDirection(PopModel.UP)
+                .setMenuButtonOffsetTime(-20);
+
 
         int[] res = {R.drawable.icon1,R.drawable.icon2,R.drawable.icon3};
         mPopButton.getPopmodel().setButtonImageResource(res);

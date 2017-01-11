@@ -63,6 +63,13 @@ public class PopModel implements Serializable {
      */
     private float radius = 0;
 
+
+    /**
+     * offset time of menu button
+     * if the time is less than zero, it means an opposite direction
+     */
+    private int menuButtonOffsetTime = 0;
+
     private PopModel(ImageView mainButton){
         this.mainButton = mainButton;
     }
@@ -180,6 +187,14 @@ public class PopModel implements Serializable {
         return this;
     }
 
+    public int getMenuButtonOffsetTime() {
+        return menuButtonOffsetTime;
+    }
+
+    public PopModel setMenuButtonOffsetTime(int menuButtonOffsetTime) {
+        this.menuButtonOffsetTime = menuButtonOffsetTime;
+        return this;
+    }
     public int getRotateTime() {
         return rotateTime;
     }
